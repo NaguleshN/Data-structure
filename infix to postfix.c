@@ -1,10 +1,11 @@
 #include <stdio.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define MAX_SIZE 10
 int stack[10];
-int top = -1;
+int top;
 //push
 void push(int temp)
 {
@@ -12,7 +13,7 @@ void push(int temp)
     stack[top]=temp;
 }
 //pop
-void pop()
+int pop()
 {
     if (top == -1){
         printf("stack is empty");
@@ -23,14 +24,18 @@ void pop()
     }
 }
 //precedence
-int precedence(char ch)
-{ 
-    if(ch == '(')
-        return 0;
-    else if (ch== '-' || ch=='+' )
-        return 1;
-    else if (ch== '*' || ch=='/' )
-        return 2;
+int preced(char ch)
+{   
+    switch(ch){
+        case '(':
+            return 0;
+        case '-':
+        case '+':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+    }  
 }
 
 int main()
@@ -43,7 +48,7 @@ int main()
     int i=0,j=0;
     while (infix[i]!='\0'){
 
-         if (isalnum(infix[i])) {
+        if (isalnum(infix[i])) {
             postfix[j++] = infix[i];
         }
         else if (infix[i] == '(') {
@@ -53,10 +58,11 @@ int main()
             while ( stack[top] != '('){
                 postfix[j++] = stack[top];
                 pop();
-            }pop();
+            }
+            pop();
         }
         else {
-            while (precedence(stack[top])>= precedence(infix[i])){
+            while (preced(stack[top])>= preced(infix[i])){
                 postfix[j++] = stack[top];
                 pop();
             }
@@ -64,10 +70,13 @@ int main()
         }
             i++;
     }
-        while(top!=-1){
+        while(top>-1){
                postfix[j++]=stack[top];
                pop();
         }
-    printf("\n%s\n", postfix);
+    for (int i=0;i<j;i++)
+    {
+        printf("%c", postfix[i]);
+    }
     return 0;
 }
