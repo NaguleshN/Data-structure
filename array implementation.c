@@ -6,7 +6,7 @@ int n=-1;
 int array[size];
 
 void insert_into_front(int val){
-    if (n==size-1){
+    if (n==size){
         printf("array is full\n");
         return;
     }
@@ -17,7 +17,7 @@ void insert_into_front(int val){
     n++;
 }
 void insert_into_back(int val){
-    if (n==size-1){
+    if (n==size){
         printf("array is full\n");
         return;
     }
