@@ -6,7 +6,7 @@ void push(int temp){
     stack[++top]=temp;
 } 
 
-char pop(){
+int pop(){
 return stack[top--];
 }
 
